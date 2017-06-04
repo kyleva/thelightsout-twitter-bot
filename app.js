@@ -17,6 +17,11 @@ app.listen(app.get('port'), () => {
 });
 
 /**
+ * Require NewRelic for availability monitoring (anti-idle)
+ */
+require('newrelic');
+
+/**
  * Initialize twitter instance
  */
 const T = new Twitter(config);
