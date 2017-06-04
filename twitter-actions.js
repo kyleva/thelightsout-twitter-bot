@@ -7,6 +7,7 @@ function replyToStatus(params){
   const message = params.message;
   const user = params.user;
 
+  console.log('Replying to user status.');
   console.log({
     statusId,
     message,
