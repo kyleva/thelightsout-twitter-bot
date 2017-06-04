@@ -1,12 +1,19 @@
 const Twitter = require('twitter');
 const TwitterActions = require('./twitter-actions');
 const config = require('./config');
+const app = require('express')();
 
-// initialize twitter instance
+/**
+ * Setup basic routing for root
+ */
+app.get('/', (req, res) => {
+  res.send('Where are we? I do not know.');
+});
+
+/**
+ * Initialize twitter instance
+ */
 const T = new Twitter(config);
-
-const response = require('./responses').get();
-
 
 /**
  * Get tweets w/ tracked phrase and do something!
