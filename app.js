@@ -17,9 +17,9 @@ app.listen(app.get('port'), () => {
 });
 
 /**
- * Require NewRelic for availability monitoring (anti-idle)
+ * Ping app every five minutes
  */
-require('newrelic');
+require('pinger')(5);
 
 /**
  * Initialize twitter instance
