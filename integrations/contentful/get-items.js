@@ -12,6 +12,4 @@ function getItems(params){
   return contentfulClient.getEntries()
 }
 
-module.exports = {
-  getItems: getItems
-};
+module.exports = getItems;

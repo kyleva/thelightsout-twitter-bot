@@ -1,8 +1,6 @@
-const contentful = require('./contentful');
+const getItems = require('./get-items');
 
 function getResponse(){
-  const getItems = contentful.getItems;
-
   require('dotenv').config();
 
   return getItems({
@@ -13,7 +11,10 @@ function getResponse(){
     const responses = data.items.map((item) => {
       return item.fields.response;
     });
-    return responses[Math.floor(Math.random() * responses.length)];
+
+    const getRandomFromArray = require('./../../utils/get-random-from-array');
+
+    return getRandomFromArray(responses);
   });
 }
 

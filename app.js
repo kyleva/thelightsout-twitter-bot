@@ -1,8 +1,6 @@
-const Twitter = require('twitter');
-const TwitterActions = require('./twitter-actions');
-const config = require('./config');
 const express = require('express');
 const app = express();
+const config = require('./config');
 
 console.log('Starting server!');
 console.log('--------------------------------------------------');
@@ -22,32 +20,25 @@ app.listen(app.get('port'), () => {
 /**
  * Ping app every five minutes
  */
-require('./pinger')(5);
+const pinger = require('./utils/pinger')(5);
 
 /**
- * Initialize twitter instance
+ * Track Twitter stream
  */
-const T = new Twitter(config);
+const twitter = require('./integrations/twitter');
+const trackStream = twitter.trackStream;
 
-/**
- * Get tweets w/ tracked phrase and do something!
- */
-T.stream('statuses/filter', {track: '#tripme'},  function(stream) {
-  stream.on('data', (tweet) => {
-    const reply = TwitterActions.reply;
-    const user = tweet.user.screen_name;
-
-    const response = require('./responses').get()
+trackStream({
+  hashtag: config.hashtag,
+  match: (tweet) => {
+    const response = require('./integrations/contentful/responses').get()
     .then((response) => {
+      const reply = twitter.reply;
       reply({
         statusId: tweet.id_str,
         message: response,
-        user: user
+        user: tweet.user.screen_name
       });
     });
-  });
-
-  stream.on('error', (error) => {
-    console.log(error);
-  });
+  }
 });
