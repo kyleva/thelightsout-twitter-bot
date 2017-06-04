@@ -19,7 +19,7 @@ app.listen(app.get('port'), () => {
 /**
  * Ping app every five minutes
  */
-require('pinger')(5);
+require('./pinger')(5);
 
 /**
  * Initialize twitter instance
