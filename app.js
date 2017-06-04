@@ -9,10 +9,10 @@ const app = express();
  */
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
   res.render('public/index.html');
 });
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), () => {
   console.log('App is running on port', app.get('port'));
 });
 
@@ -21,22 +21,13 @@ app.listen(app.get('port'), function() {
  */
 const T = new Twitter(config);
 
-console.log('Initialized Twitter instance.');
-console.log(T);
-
-console.log('Look to track #tripme Tweets!');
-
 /**
  * Get tweets w/ tracked phrase and do something!
  */
 T.stream('statuses/filter', {track: '#tripme'},  function(stream) {
-  console.log('Started tracking #tripme hashtag via Streaming API.');
-
   stream.on('data', (tweet) => {
     const reply = TwitterActions.reply;
     const user = tweet.user.screen_name;
-
-    console.log('Wow, there\'s a #tripme Tweet!');
 
     const response = require('./responses').get()
     .then((response) => {
