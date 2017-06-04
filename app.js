@@ -4,6 +4,9 @@ const config = require('./config');
 const express = require('express');
 const app = express();
 
+console.log('Starting server!');
+console.log('--------------------------------------------------');
+
 /**
  * Set up app
  */
