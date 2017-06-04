@@ -21,9 +21,8 @@ function getResponse(){
     accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
   })
   .then((data) => {
-    const responses = [];
-    data.items.forEach(item => {
-      responses.push(item.fields.response);
+    const responses = data.items.map((item) => {
+      return item.fields.response;
     });
     return responses[Math.floor(Math.random() * responses.length)];
   });
